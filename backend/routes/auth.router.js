@@ -32,4 +32,27 @@ router.post("/register", async (req, res) => {
   }
 });
 
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    //kullanıcıdan gelen email ve password
+
+    //userSchema formatındaki dataları emaile göre kontrol etti.
+    let user = await User.findOne({ email: email });
+    if (user == null) {
+      res.status(403).json({ message: "Kullanıcı Bulunamadı!" });
+    } else {
+      if (user.password != password) {
+        res.status(403).json({ message: " Hatalı Şifre" });
+      } else {
+        const token = jwt.sign({}, secretKey, options);
+        let model = { apiMessage: "Login Başarılı", token: token, user: user };
+        res.json(model);
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ message: error });
+  }
+});
+
 module.exports = router;
