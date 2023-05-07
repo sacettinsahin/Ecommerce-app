@@ -1,1 +1,37 @@
-<p>login works!</p>
+<div class="login-page">
+  <div class="login-form-wrapper">
+    <form [formGroup]="loginForm">
+      <div class="login-form-header">
+        <h3>Login</h3>
+      </div>
+      <div class="login-form-body">
+        <div class="login-form-item">
+          <label>Email:</label>
+
+          <input type="text" formControlName="email" />
+        </div>
+        <div class="login-form-item">
+          <label>Password:</label>
+          <input type="password" formControlName="password" />
+        </div>
+      </div>
+      <!-- <small
+        *ngIf="
+          loginForm.get('email')?.hasError('required') &&
+          loginForm.get('email')?.touched
+        "
+        >email zorunludur</small
+      > -->
+
+      <div class="login-form-footer">
+        <button
+          type="submit"
+          (click)="submitLogin(loginForm)"
+          [disabled]="loginForm.invalid"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
